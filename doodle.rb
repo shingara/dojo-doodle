@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'haml'
 
 class Doodle
 
@@ -12,12 +13,14 @@ class Doodle
   end
 
   def add_question(text)
-    @questions << {text => {}}
+    @questions << {:question => text,
+                    :answers=> []}
     write
   end
 
   def reset
     FileUtils.rm_f "db/#{@env}.yml"
+    @questions = []
   end
 
   private
@@ -30,8 +33,8 @@ class Doodle
 
 end
 
-configure :test do
-  @doodle = Doodle.new('test')
+before do
+  @doodle = Doodle.new(options.environment.to_s)
 end
 
 get '/' do
@@ -41,7 +44,7 @@ end
 
 __END__
 
-@index
-#ul
-  - @questions.each do |question|
-    %li= question.key
+@@ index
+%ul
+  - @questions.each do |question|
+    %li= question[:question]
