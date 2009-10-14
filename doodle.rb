@@ -16,6 +16,10 @@ class Doodle
     write
   end
 
+  def reset
+    FileUtils.rm_f "db/#{@env}.yml"
+  end
+
   private
 
   def write
@@ -26,6 +30,18 @@ class Doodle
 
 end
 
-get '/' do
-  'ok'
+configure :test do
+  @doodle = Doodle.new('test')
 end
+
+get '/' do
+  @questions = @doodle.questions
+  haml :index
+end
+
+__END__
+
+@index
+#ul
+  - @questions.each do |question|
+    %li= question.key
