@@ -1,3 +1,5 @@
+require 'sinatra'
+
 class Doodle
 
   attr_reader :questions
@@ -17,9 +19,13 @@ class Doodle
   private
 
   def write
-    File.open("db/#{@env}.yml", 'w+') do |f|
+    File.open("db/#{@env}.yml", "w") do |f|
       f.write @questions.to_yaml
     end
   end
 
+end
+
+get '/' do
+  'ok'
 end
