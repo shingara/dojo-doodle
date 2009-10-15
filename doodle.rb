@@ -45,6 +45,9 @@ end
 __END__
 
 @@ index
-%ul
-  - @questions.each do |question|
-    %li= question[:question]
+- unless @questions.empty?
+  %ul
+    - @questions.each do |question|
+      %li= question[:question]
+- else
+  %p No questions now
