@@ -51,3 +51,5 @@ __END__
       %li= question[:question]
 - else
   %p No questions now
+%p
+  %a{:href => '/new'} Add question

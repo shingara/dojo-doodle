@@ -44,11 +44,14 @@ class DoodleWebTest < Test::Unit::TestCase
   def test_render_questions
     get '/'
     assert_match 'Are you sure ?', last_response.body
+    assert_match "<a href='/new'>Add question</a>", last_response.body
   end
 
   def test_render_index_without_question
     @doodle.reset
     get '/'
     assert_match 'No questions now', last_response.body
+    assert_match "<a href='/new'>Add question</a>", last_response.body
+
   end
 end
